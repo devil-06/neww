@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letter for You</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #fddde6;
+            margin: 0;
+            flex-direction: column;
+        }
+        
+        .envelope-container {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .envelope {
+            position: absolute;
+            width: 300px;
+            height: 200px;
+            background-color: #ff4d6d;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50%;
+            background-color: #ff1e56;
+            clip-path: polygon(0 0, 100% 0, 50% 100%);
+            transition: transform 0.5s ease-in-out;
+            transform-origin: top;
+        }
+        
+        .letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.8s ease-in-out;
+            opacity: 0;
+            overflow: auto;
+        }
+        
+        .open .flap {
+            transform: rotateX(180deg);
+        }
+        
+        .open .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        
+        .message {
+            opacity: 0;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="envelope-container" onclick="openEnvelope()">
+        <div class="envelope">
+            <div class="flap"></div>
+        </div>
+    </div>
+    <div class="letter">
+        <h2>Hey You! 😊</h2>
+        <p class="message"></p>
+        <p>Your Favourite Cactus... 😉</p>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            let envelope = document.querySelector(".envelope-container");
+            let letter = document.querySelector(".letter");
+            let message = document.querySelector(".message");
+            let text = "Hey, beautiful! I know we haven't known each other for too long, but guess what? I already think you're awesome. And if your mood swings are trying to scare me away—sorry, not happening! 😜 You're stuck with me now. So, sit back, relax, and let me remind you that you're amazing, even when you're a little grumpy. If I could, I'd send you a truckload of chocolates and the softest hugs right now. But since I can't, just imagine it, okay? Smile for me now… Yep, that's the one! 💖";
+
+            envelope.classList.toggle("open");
+            setTimeout(() => {
+                letter.style.opacity = "1";
+                letter.style.transform = "translate(-50%, -50%) scale(1)";
+                typeEffect(message, text, 50);
+            }, 500);
+        }
+
+        function typeEffect(element, text, speed) {
+            let index = 0;
+            element.innerHTML = "";
+            element.style.opacity = 1;
+
+            function write() {
+                if (index < text.length) {
+                    element.innerHTML += text.charAt(index);
+                    index++;
+                    setTimeout(write, speed);
+                }
+            }
+            write();
+        }
+    </script>
+</body>
+
+</html>
